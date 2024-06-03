@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
 public class Main {
-    public Main() {
-    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -10,16 +8,32 @@ public class Main {
         stepTracker.StepTracker();
         PrintMenu.printMenu();
 
-        for (int userInput = scanner.nextInt(); userInput != 4; userInput = scanner.nextInt()) {
+        int userInput = scanner.nextInt();
+
+        while (userInput != 4) {
             if (userInput == 1) {
                 stepTracker.addStepsPerDay();
             } else if (userInput == 2) {
                 System.out.println("Какой месяц интересует?");
+                int month = scanner.nextInt();
+                //   stepTracker.getDaySteps(month);
+                //   System.out.println("Общее количество шагов за " + month + " месяц:" + stepTracker.getDaySteps(month));
+            } else if (userInput == 3) {
+                System.out.println("Введи новую цель");
+                int goal = scanner.nextInt();
+                if (goal > 0) {
+                    stepTracker.purpose(goal);
+                } else {
+                    System.out.println(" Не надо лениться");
+                }
+            } else {
+                System.out.println("Выбор ограничен");
+                System.out.println();
             }
-
             PrintMenu.printMenu();
+            System.out.println();
+            userInput = scanner.nextInt();
         }
-
-        System.out.println("Завершение программы");
+        System.out.println("Программа завершена");
     }
 }

@@ -3,28 +3,26 @@ import java.util.Scanner;
 
 public class StepTracker {
     HashMap<Integer, MonthData> monthToData = new HashMap();
-    Scanner scanner;
-
-    public StepTracker() {
-        this.scanner = new Scanner(System.in);
-    }
+    Scanner scanner = new Scanner(System.in);
+    MonthData monthData = new MonthData();
+    Converter converter = new Converter();
+    int purpose = 10000;
 
     public void StepTracker() {
-        for (int i = 1; i < 13; ++i) {
-            this.monthToData.put(i, new MonthData());
+        for (int i = 1; i < 13; i++) {
+            monthToData.put(i, new MonthData());
         }
-
     }
 
     public void addStepsPerDay() {
         System.out.println("За какой месяц ввести шаги?");
         System.out.println("Введи нужный месяц, если 1-январь, а 12-декабрь");
+        int month = scanner.nextInt();
 
-        int month;
-        for (month = this.scanner.nextInt(); month < 1 && month > 13; month = this.scanner.nextInt()) {
-            System.out.println("Серьёзно? Введи нормальный месяц");
-        }
-
+        //   for (month = this.scanner.nextInt(); month < 1 & month > 13; month = this.scanner.nextInt()) {
+        //      System.out.println("Серьёзно? Введи нормальный месяц");
+        //  }
+        //
         System.out.println("Введи день от 1 до 31");
         int day = this.scanner.nextInt();
         System.out.println("Введи количество пройденных шагов");
@@ -48,5 +46,10 @@ public class StepTracker {
             System.out.println("Что-то пошло не так, проверь правильность ввода");
         }
 
+    }
+
+    public void purpose(int newPurpose) {
+        purpose = newPurpose;
+        System.out.println("Новая цель: " + newPurpose + " шага(ов)!");
     }
 }

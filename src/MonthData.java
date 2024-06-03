@@ -1,10 +1,11 @@
 public class MonthData {
-    int[] monthDays = new int[31];
+    int []monthDays;
 
-    public MonthData() {
+    MonthData() {
+        int[] monthDays = new int[31];
     }
 
     public void addSteps(int day, int steps) {
-        this.monthDays[day] = steps;
+        monthDays[day] = steps;
     }
 }
