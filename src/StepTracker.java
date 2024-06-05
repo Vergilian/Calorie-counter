@@ -29,7 +29,7 @@ public class StepTracker {
         monthToData.get(month).addSteps(day, steps);
     }
 
-    public correct(int day, int month, int steps) {
+    public void correct(int day, int month, int steps) {// исключение ошибок
         boolean isDayCorrect = 0 < day && day < 32;
         boolean isMonthCorrect = 1 < month && month < 13;
         boolean isStepsCorrect = steps > 0;
@@ -47,7 +47,16 @@ public class StepTracker {
         System.out.println("Новая цель: " + newPurpose + " шага(ов)!");
     }
 
-    public void getStatistics(){
-
+    public void getStatistics(int month) {
+        getDaySteps(month);
+        System.out.println("Общее количество шагов за " + month + " месяц: " + getMonthSteps(month));
+        System.out.println("Максимальное количество шагов в " + month + " месяце: " + getMaxStepsMonth(month));
+        System.out.println("Среднее количество шагов за " + month + " месяц: " + getAverageOfSteps(month));
+        getDistance(month);
+        getCCalories(month);
+        System.out.println("Best серия из " + getMaxPurposeSteps(month) + " дней.");
     }
+
+
+
 }

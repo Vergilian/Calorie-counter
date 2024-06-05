@@ -13,7 +13,7 @@ public class Main {
             } else if (userInput == 2) {
                 System.out.println("Какой месяц интересует?");
                 int month = scanner.nextInt();
-                stepTracker.getStatistics();
+                stepTracker.getStatistics(month);
             } else if (userInput == 3) {
                 System.out.println("Введи новую цель");
                 int goal = scanner.nextInt();

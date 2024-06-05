@@ -1,8 +1,8 @@
 public class MonthData {
-    int [] monthDays;
+    int [] monthDays= new int[31];
 
     MonthData() {
-        monthDays = new int[31];
+
     }
 
     public void addSteps(int day, int steps) {
