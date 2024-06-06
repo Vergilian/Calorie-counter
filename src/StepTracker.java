@@ -2,11 +2,14 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class StepTracker {
-    HashMap<Integer, MonthData> monthToData = new HashMap();
+    HashMap<Integer, MonthData> monthToData = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
     MonthData monthData = new MonthData();
     Converter converter = new Converter();
     public static int purpose = 10001;
+    public static int month = 0;
+    public static int day = 0;
+    public static int steps = 0;
 
     public StepTracker() {
         for (int i = 1; i < 13; i++) {
@@ -16,32 +19,42 @@ public class StepTracker {
 
     public void addStepsPerDay() {
         System.out.println("Введи нужный месяц, если 1-январь, а 12-декабрь");
-        int month = scanner.nextInt();
-        System.out.println("Введи день от 1 до 31");
-        int day = scanner.nextInt();
-        System.out.println("Введи количество пройденных шагов");
-        int steps = scanner.nextInt();
-        while (steps < 0) {
-            System.out.println("Введи положительное число шагов");
-            steps = scanner.nextInt();
-        }
-        iscorrect(day,month,steps);
-        monthToData.get(month).addSteps(--day, steps);
+        StepTracker.month = scanner.nextInt();
+        isMonthCorrect(month);
     }
 
-    public void iscorrect(int month, int day, int steps) {
-        final var isMonthCorrect = 0 < month && month < 13;
-        final var isDayCorrect = 0 < day && day < 32;
-        final var isStepsCorrect = steps > 0;
-        if (isMonthCorrect && isDayCorrect && isStepsCorrect) {
-            monthToData.get(month).addSteps(--day, steps);
-            System.out.println();
-            System.out.println("Данные успешно добавлены");
-            System.out.println();
+
+    public void isMonthCorrect(int month) {
+        final var isMonthCorrect = 0 < StepTracker.month && StepTracker.month < 13;
+        if (isMonthCorrect) {
+            isDayCorrect(StepTracker.day);
         } else {
-            System.out.println("Что-то пошло не так, проверь правильность ввода");
-            System.out.println();
+            System.out.println("Месяц введён не корректно, от 1 до 12");
             addStepsPerDay();
+        }
+    }
+
+    public void isDayCorrect(int day) {
+        System.out.println("Введи день от 1 до 31");
+        StepTracker.day = scanner.nextInt();
+        final var isDayCorrect = 0 < StepTracker.day && StepTracker.day < 32;
+        if (isDayCorrect) {
+            isStepsCorrect(StepTracker.steps);
+        } else {
+            System.out.println("День указан не верно, от 1 до 31");
+            isDayCorrect(StepTracker.day);
+        }
+    }
+
+    public void isStepsCorrect(int steps) {
+        System.out.println("Введи кол-во шагов");
+        StepTracker.steps = scanner.nextInt();
+        final var isStepsCorrect = StepTracker.steps > 0;
+        if (isStepsCorrect) {
+            monthToData.get(StepTracker.month).addSteps(--StepTracker.day, StepTracker.steps);
+        } else {
+            System.out.println("Кол-во шагов указано не верно, не меньше 0");
+            isStepsCorrect(steps);
         }
     }
 
@@ -111,18 +124,17 @@ public class StepTracker {
         int maxSeries = 0;
         for (int i = 0; i < monthData.days.length; i++) {
             if (monthToData.get(month).days[i] >= purpose) {
-                currentSeries = currentSeries + 1;
+                currentSeries++;
+            } else {
                 if (currentSeries > maxSeries) {
                     maxSeries = currentSeries;
                 }
-            } else if (monthToData.get(month).days[i] < purpose){
-                    if (currentSeries > maxSeries) {
-                        maxSeries = currentSeries;
-                    }
-                    currentSeries = 0;
+                currentSeries = 0;
             }
+        }
+        if (currentSeries > maxSeries){
+            maxSeries = currentSeries;
         }
         return maxSeries;
     }
-
 }
