@@ -18,15 +18,7 @@ public class StepTracker {
         System.out.println("Введи нужный месяц, если 1-январь, а 12-декабрь");
         int month = scanner.nextInt();
         System.out.println("Введи день от 1 до 31");
-        int day = scanner.nextInt();1
-        while (day < 0) {
-            System.out.println("Шагов не может быть меньше 0");
-        }
-        while (day > 32) {
-            System.out.println("Шагов не может быть больше 32");
-        }
-
-        day = scanner.nextInt();
+        int day = scanner.nextInt();
         System.out.println("Введи количество пройденных шагов");
         int steps = scanner.nextInt();
         while (steps < 0) {
@@ -35,25 +27,22 @@ public class StepTracker {
         }
         iscorrect(day,month,steps);
         monthToData.get(month).addSteps(--day, steps);
-        System.out.println();
-        System.out.println("Данные успешно добавлены");
-        System.out.println();
     }
 
-    public void iscorrect(int day, int month, int steps) {// исключение ошибок
-        boolean isDayCorrect = 0 < day && day < 32;
-        System.out.println("Не верно введено кол-во дней");
-        boolean isMonthCorrect = 1 < month && month < 13;
-        System.out.println("Не верно введен месяц");
-        boolean isStepsCorrect = steps > 0;
-        System.out.println("Шагов априори не может быть меньше 0 в день");
-        if (isDayCorrect && isMonthCorrect && isStepsCorrect) {
-            ((MonthData) this.monthToData.get(month)).addSteps(day, steps);
-            System.out.println("Данные сохранены");
+    public void iscorrect(int month, int day, int steps) {
+        final var isMonthCorrect = 0 < month && month < 13;
+        final var isDayCorrect = 0 < day && day < 32;
+        final var isStepsCorrect = steps > 0;
+        if (isMonthCorrect && isDayCorrect && isStepsCorrect) {
+            monthToData.get(month).addSteps(--day, steps);
+            System.out.println();
+            System.out.println("Данные успешно добавлены");
+            System.out.println();
         } else {
             System.out.println("Что-то пошло не так, проверь правильность ввода");
+            System.out.println();
+            addStepsPerDay();
         }
-
     }
 
     public void changePurpose(int newPurpose) {
